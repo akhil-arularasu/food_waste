@@ -1,0 +1,152 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+  <script type="text/javascript">
+    function changeMessage() {
+          var reduction = document.pledgeform.{{form.pledged_reduction.name}}.value;
+          document.getElementById("message-border").style.backgroundColor = "#0d6efd"
+          var heading = document.getElementById("message");
+          var heading1 = document.getElementById("message1");
+          heading.style.color="white"
+          heading1.style.color="white"
+          var yearly_reduction = Math.round(reduction * 52);
+          var methane_emmision = Math.round(yearly_reduction * .082);
+          var co2_emmision = Math.round(yearly_reduction * 1.9);
+          heading.firstChild.nodeValue=  "Great! That would reduce every year about";
+          heading1.firstChild.nodeValue=  yearly_reduction +" lbs of food waste & " +
+                                          methane_emmision + " lbs of Methane emission & " +
+                                          co2_emmision + " lbs of CO2 emission.";
+        }
+</script>
+    <div>
+      <br>
+      <form name="pledgeform" method="POST" >
+        {% if form.errors %}
+          {% for field in form %}
+            {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+        <div class="row">
+        <div class="col-md-6">
+        <div class="row">
+          <h3>Take a pledge today </h3>
+        </div>
+        <br>
+        <div class="row">
+        <div class="col-md-3 p-2 justify-content-end d-flex">
+          <label class="control-label justify-content-end" for="{{ field.zip_code }}" >Zip Code: </label>
+        </div>
+        <div class="col-md-4" d-flex>
+          <input type="number" name="{{form.zip_code.name}}" required id="{{form.zip_code.id_for_label}}" value="{{form.zip_code.value}}"/>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-3 p-2 justify-content-end d-flex">
+          <label class="control-label justify-content-end" for="{{form.state.id_for_label}}" >State:</label>
+        </div>
+        <div class="col-md-4" d-flex>
+          <input type="text" name="{{form.state.name}}" id="{{form.state.id_for_label}}" maxlength="128" value="{{form.state.value}}"/>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-3 p-2 justify-content-end d-flex">
+          <label class="control-label justify-content-end" for="{{form.country.id_for_label}}" maxlength="128">Country:</label>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="{{form.country.name}}" id="{{form.country.id_for_label}}"maxlength="128" value="{{form.country.value}}"/>
+        </div>
+        </div>
+        <div class="row">
+          <hr>
+          <h5> Waste generated per week in your household </h5>
+          <BR>
+        </div>
+        <div class="row">
+        <div class="col-md-3 justify-content-end d-flex">
+          <label class="control-label justify-content-end" for="{{form.total_waste_per_week.id_for_label}}" >Total waste(lbs):</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="{{form.total_waste_per_week.name}}" required id="{{form.total_waste_per_week.id_for_label}}"
+          value="{{form.total_waste_per_week.value}}"/>
+        </div>
+        </div>
+        <p> 1 Kitchen trash bag is about 15 lbs </p>
+        <div class="row">
+        <div class="col-md-3 justify-content-end d-flex">
+        <label class="control-label justify-content-end" for="{{form.total_food_waste_per_week.id_for_label}}">Food waste(lbs):</label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="{{form.total_food_waste_per_week.name}}" required id="{{form.total_food_waste_per_week.id_for_label}}" value="{{form.total_food_waste_per_week.value}}">
+        </div>
+        </div>
+        <p> 15-30% of total waste is <a href="/foodwaste/compost">Organic food waste</a> in US household</p>
+        <div class="p-2 border border-secondary">
+        <h5> I pledge to reduce food waste ending up in landfills by reduction and/or recycle through <a href="/foodwaste/compost-demo">Composting</a> every week</h5>
+        <div class="row">
+            <div class="col-md-3 justify-content-end d-flex">
+            <label class="control-label justify-content-end font-weight-bold" for="{{form.pledged_reduction.id_for_label}}"><b>Pledged Reduction(lbs):</b></label>
+        </div>
+        <div class="col-md-4">
+          <input type="number" name="{{form.pledged_reduction.name}}" required id="{{form.pledged_reduction.id_for_label}}"
+          onchange=changeMessage() value="{{form.pledged_reduction.value}}">
+          <br>
+        </div>
+        </div>
+        {% csrf_token %}
+        <div class="row">
+        <div class="col-md-7">
+          <center>
+          <input type="submit" name="" class ="btn btn-primary" value="Confirm your Pledge">
+          </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-md-5 p-1 border border-primary">
+          <div class="row" >
+          <h4><b>1.3 billion</B> tons of food is wasted globally each year<h4>
+          </div>
+          <div class="row">
+            <h4> <b>One third</b> all food produced is wasted</h4>
+          </div>
+          <br>
+          <div class="row">
+            <h4> <b>4.4 gigatons</b> of greenhouse gas emission from foodwaste</h4>
+          </div>
+          <br>
+          <div class="row">
+            <h4> Methane generated from food waste is <b>25 times</b> more harmful than Carbon-Dioxide</h4>
+          </div>
+          <br>
+          <div class="row">
+            <h4> Over <b>50%</b> of food waste occurs at home</h4>
+          </div>
+          <br>
+          <div class="row">
+            <h4> <b>690 million</b> still go hungry</h4>
+          </div>
+          <br>
+          <button class ="btn btn-primary" onclick="window.location.href='/foodwaste/pledgeresults'">Check Pledge Results</button>
+          </form>
+        </div>
+        </div>
+        <br>
+        <div id="message-border" class="d-note col-md-10">
+            <h5 class="" id="message"> </h5>
+            <h4 id="message1"> </h4>
+        </div>
+
+<!--
+         {{form.as_p}} -->
+      </form>
+    </div>
+
+{% endblock %}

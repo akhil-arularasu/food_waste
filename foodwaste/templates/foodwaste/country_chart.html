@@ -1,0 +1,134 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+    <br>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        function actionOnSubmit()
+        {
+              //Get the select select list and store in a variable
+              var e = document.getElementById("country");
+              //Get the selected value of the select list
+              var formaction = e.options[e.selectedIndex].value;
+              //Update the form action
+              document.countryform.action = "/foodwaste/" + formaction +"/";
+
+          }
+    </script>
+    <div class="container-fluid">
+      <form name="countryform" onSubmit="actionOnSubmit()" method="get">
+      <label for="country">Pick a Country:</label>
+      <select id="country" name="country">
+      {% for country in country_records_all %}
+        <option value={{ country.id}}>{{ country.name}}</option>
+      {% endfor %}
+      </select>
+      <input type="submit" value="Submit">
+    </form>
+    </div>
+    <br><br>
+    <h2>Top 5 countries in Food wastes</h2>
+    <br>
+    <div class="row content">
+      <div class="col-sm-5">
+      {% if country_records %}
+          <table class="table table-condensed  table-striped   w-auto">
+            <thead class="thead-dark">
+              <tr scope="row" >
+              <th scope="col">Country</th>
+              <th scope="col">Total Waste</th>
+              <th scope="col">Organing Waste %</th>
+              <th scope="col">Population</th>
+              <th scope="col">&nbsp;&nbsp;&nbsp;</th>
+              <th scope="col">Total Waste</th>
+              <th scope="col">Organic Waste</th>
+              </tr>
+              <tr scope="row" >
+                <th>&nbsp;</th>
+                <th>Tons/year</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+    <!-- The following two cells will appear under the same header -->
+                <th colspan="2" style="text-align:center">Per Person Per Year(lb)</th>
+              </tr>
+            </thead>
+            {% load humanize %}
+            {% for country in country_records %}
+              <tr scope="row" >
+                <td><a href="{{country.id}}/">{{country.name}} </a></td>
+                <td>{{ country.total_waste|intword  }}</td>
+                <td>{% if country.organic_pct != 0  %}
+                    {{ country.organic_pct }}
+                    {% else %}
+                    Not Available
+                    {% endif %}
+                </td>
+              <td>
+                {{ country.population|intword }}
+              </td>
+              <td>&nbsp;&nbsp;&nbsp;</td>
+              <td>
+                {{ country.waste_per_person|intcomma }}
+              </td>
+              <td>
+                {{ country.organic_waste_per_person|intcomma }}
+              </td>
+              </tr>
+            {% endfor %}
+        </table>
+
+      {% else %}
+        <p>No Country level waste records.</p>
+      {% endif %}
+      </div>
+      <div class="col-sm-5" id="container" style="width: 55%;">
+        <br>
+        <br>
+        <br>
+              <canvas id="pie-chart"></canvas>
+            <script>
+            var config = {
+                type: 'pie',
+                data: {
+                  datasets: [{
+                    data:  {{ data|safe }},
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(155, 105, 86)',
+                    'rgb(30, 50, 200)'
+                    ],
+                    label: 'Total Waste'
+                  }],
+                  labels: {{ labels|safe }}
+                },
+                options: {
+                  responsive: true
+                }
+              };
+
+              window.onload = function() {
+                var ctx = document.getElementById('pie-chart').getContext('2d');
+                window.myPie = new Chart(ctx, config);
+              };
+              </script>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Raw dataset obtainted from worldbank.org for this analysis</span>
+            </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

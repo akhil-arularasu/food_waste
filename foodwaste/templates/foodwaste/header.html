@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Akhil-Personal</title>
+	<meta charset="utf-8" />
+	{% load static %}
+	<link rel='stylesheet' href="/static/css/bootstrap.min.css" type='text/css'>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+	<div class="row content">
+    <div class="col-sm-2 sidenav">
+			<br>
+			<center>
+			<img src="{% static '/img/compost.png' %}" class="responsive-img" style='max-height:250px;' alt="face">
+			</center>
+			<br>
+			<br>
+			<div class="well bs-sidebar" id="sidebar" style="background-color:#fff">
+			  <ul class="nav nav-pills nav-stacked justify-content-end">
+				<li><a href='/'>Home</a></li>
+				<li><a href='/foodwaste/compost'>How to Compost</a></li>
+				<li><a href='/foodwaste/compost-school'>Composting at Schools</a></li>
+				<li><a href='/foodwaste'>Data Science</a></li>
+				<li><a href='/foodwaste/compost'>Composting Demonstration</a></li>
+			  </ul>
+			</div> <!--well bs-sidebar affix-->
+		</div>
+		<div class="col-sm-10">
+				<br>
+				<center>
+				<h3>Research and Data Science</h3>
+				</center>
+				<br>
+				<div class='container-fluid'>
+				<br><br>
+					 {% block content %}
+					 {% endblock %}
+				</div>
+		</div>
+
+
+	<footer>
+		<div class="container-fluid" style='margin-left:15px'>
+			<p><a href="#" target="blank">Contact</a> | <a href="#" target="blank">LinkedIn</a></p>
+		</div>
+	</footer>
+
+</body>
+
+</html>

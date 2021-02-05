@@ -1,0 +1,47 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+
+    <h1>Food Waste By Country</h1>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <div >
+      {% if country_records %}
+          <table class="table  table-condensed">
+            <thead>
+              <th>Country</th>
+              <th>GDP</th>
+              <th>Population</th>
+              <th>Organing Waste %</th>
+              <th>Total Waste(Tons/year)</th>
+            </thead>
+            {% load humanize %}
+            {% for country in country_records %}
+              <tr class="success">
+                <td><a href="{{country.id}}/">{{country.name}} </a></td>
+                <td>{{ country.gdp|intcomma  }}</td>
+                <td>{{ country.population|intcomma  }}</td>
+                <td>{{ country.organic_pct }}</td>
+                <td>{{ country.total_waste|intcomma  }}</td>
+              </tr>
+            {% endfor %}
+        </table>
+
+      {% else %}
+        <p>No Country level waste records.</p>
+      {% endif %}
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

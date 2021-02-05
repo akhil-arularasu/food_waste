@@ -1,0 +1,28 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+    <br>
+    <div class="container">
+    <br>
+{% load mathfilters %}
+    <br>
+    <div class="row content">
+    <div class="col-sm-5">
+    <div class="progress" style="height: 50px;">
+      <div class="progress-bar" role="progressbar"
+      aria-valuenow="{{ pledged_reduction.pledged_reduction__sum}}"  aria-valuemin="0" aria-valuemax="200" style="width:{{ pledged_reduction.pledged_reduction__sum|div:20}}%">
+    {{ pledged_reduction.pledged_reduction__sum|div:20}} %
+  </div>
+  </div>
+  </div>
+</div>
+<br>
+<h3> Pledge Goal - 2000 lbs of food waste reduction<h3>
+<h3> So far pledged {{ pledged_reduction.pledged_reduction__sum}} lbs <h3>
+
+
+
+
+
+
+{% endblock %}

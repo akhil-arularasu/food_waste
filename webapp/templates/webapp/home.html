@@ -1,0 +1,12 @@
+{% extends "webapp/header.html" %}
+
+{% block content %}
+
+<body class="body" style="background-color:#f6f6f6">
+	<form action="new_user" method="post">
+			{% csrf_token %}
+		<input type="text" name="first_name">
+		<input type="submit" value="submit">
+</body>
+
+{% endblock %}	 

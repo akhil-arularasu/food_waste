@@ -1,0 +1,20 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+<br>
+<div class="jumbotron">
+    <h2>Country Details:</h2>
+      {% load humanize %}
+    <br>
+    <div class="row content">
+    <div class="col-sm-5">
+    <p>Name: {{country_details.name}}</p>
+    <p>GDP: {{country_details.gdp|intword}}</p>
+    <p>Population: {{country_details.population|intword}}</p>
+    <hr>
+    <p>Total Waste Per Person: {{country_details.waste_per_person}} lbs</p>
+    <p>Oraganic Waste Per Person: {{country_details.organic_waste_per_person}} lbs</p>
+  </div>
+  * Raw dataset obtainted from worldbank.org for this analysis
+
+{% endblock %}

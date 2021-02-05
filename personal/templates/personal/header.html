@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Reduce Food Waste</title>
+	<meta charset="utf-8" />
+	{% load static %}
+	<link rel='stylesheet' href="/static/css/bootstrap.min.css" type='text/css'>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+
+<body class="body" >
+	<div class="row content" style="background-color:#90EE90">
+		<div class="col-sm-2 sidenav">
+			<center>
+			<img src="{% static '/img/compost.png' %}" class="responsive-img" style='max-height:130px;' alt="face">
+			</center>
+	</div>
+	<div class="col-sm-10 ">
+			<br>
+			<div >
+			<center>
+			<h3>Environment sustainability through<h3>
+			<h2>Food waste reduction and Composting</h2>
+		</div>
+	</div>
+</div>
+	<div class="row content">
+    <div class="col-sm-2 sidenav">
+			<br>
+			<div class="well bs-sidebar" id="sidebar" style="background-color:#fff">
+			  <ul class="nav  flex-column">
+				<li class="nav-item"><a href='/'>Home</a></li>
+				<li class="nav-item"><a href='/foodwaste/compost'>How to Compost</a></li>
+				<li class="nav-item"><a href='/foodwaste/compost-school'>Composting at Schools</a></li>
+				<li class="nav-item"><a href='/foodwaste/milltown-school'>Compost Bin Project</a></li>
+				<li class="nav-item"><a href='/foodwaste/compost-demo'>Composting Video</a></li>
+				<li class="nav-item"><a href='/foodwaste/pledge'>Take a Pledge</a></li>
+				<li class="nav-item"><a href='/foodwaste/about'>About Me</a></li>
+				<br>
+				<b>Data Science</b>
+				<li class="nav-item"><a href='/foodwaste/foodwaste-report'>Food Waste Report</a></li>
+				<li class="nav-item"><a href='/foodwaste'>Waste By Country</a></li>
+
+
+
+			  </ul>
+			</div> <!--well bs-sidebar affix-->
+		</div>
+		<div class="col-sm-10" >
+						 {% block content %}
+					 {% endblock %}
+			</div>
+
+
+	<footer>
+		<div class="container-fluid" style='margin-left:15px'>
+			<p><a href="mailto:helloakhil@gmail.com" target="blank">Contact</a> | <a href="https://www.linkedin.com/in/akhil-arularasu/" target="blank">LinkedIn</a></p>
+		</div>
+	</footer>
+
+</body>
+
+</html>
