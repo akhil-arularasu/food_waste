@@ -27,5 +27,6 @@ urlpatterns = [
       path('pledge', views.pledge_info_view, name='pledge_info'),
       path('pledgeresults', PledgeResultsView.as_view(), name='pledge_results'),
       path('about', views.about, name='about'),
+      path('press-coverage', views.press_coverage, name='press-coverage'),
       path('foodwaste-report', views.foodwaste_report, name='foodwaste_report'),
 ]

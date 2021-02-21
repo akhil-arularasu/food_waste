@@ -4,22 +4,34 @@
     <br>
     <div class="container">
     <br>
+    <h1>Thank you for taking the pledge and help save the planet</h1>
+    </div>
+    <br>
 {% load mathfilters %}
     <br>
     <div class="row content">
-    <div class="col-sm-5">
-    <div class="progress" style="height: 50px;">
-      <div class="progress-bar" role="progressbar"
-      aria-valuenow="{{ pledged_reduction.pledged_reduction__sum}}"  aria-valuemin="0" aria-valuemax="200" style="width:{{ pledged_reduction.pledged_reduction__sum|div:20}}%">
-    {{ pledged_reduction.pledged_reduction__sum|div:20}} %
-  </div>
-  </div>
-  </div>
-</div>
-<br>
-<h3> Pledge Goal - 2000 lbs of food waste reduction<h3>
-<h3> So far pledged {{ pledged_reduction.pledged_reduction__sum}} lbs <h3>
+        <div class="col-sm-5">
+        <div class="progress" style="height: 50px;">
+          <div class="progress-bar" role="progressbar"
+          aria-valuenow="{{ pledged_reduction.pledged_reduction__sum}}"  aria-valuemin="0" aria-valuemax="200" style="width:{{ pledged_reduction.pledged_reduction__sum|div:20}}%">
+        {{ pledged_reduction.pledged_reduction__sum|div:20}} %
+      </div>
+      </div>
+      </div>
+    </div>
+    <br>
+    <h3> Goal - Reduce 2.5 MTCO2-e of GHG emissions from 2000 lbs of food waste reduction</h3>
+    <h4> So far pledged {{ pledged_reduction.pledged_reduction__sum}} lbs and that will help reduce {{ pledged_reduction.pledged_reduction__sum|div:800|floatformat  }} MTCO2-e of harmful GHG per year</h4>
+    <br>
+    <br>
 
+    * Calculation details
+    <p> Total global food waste=1.3 billion tons.<br>
+      Total global GHG emissions from food waste = 3.6 GT of CO2-e (removed 0.8 GTCO2-e due to deforestation from <a href="http://www.fao.org/fileadmin/templates/nr/sustainability_pathways/docs/FWF_and_climate_change.pdf">FAO of UN</a> numbers 4.4 GT)
+      Metric Ton =2204 lbs.<br>Additioanlly this calculation just uses weight of food waste however some
+      <a href="https://ec.europa.eu/environment/integration/research/newsalert/pdf/carbon_footprint_of%20_food_waste_not_necessarily_related%20_to_its_weight_406na3_en.pdf">
+      studies</a> point out CO2-e contributed by other factors than just weight.
+    </p>
 
 
 

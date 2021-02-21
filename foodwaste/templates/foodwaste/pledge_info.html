@@ -7,15 +7,15 @@
           document.getElementById("message-border").style.backgroundColor = "#0d6efd"
           var heading = document.getElementById("message");
           var heading1 = document.getElementById("message1");
+          var heading2 = document.getElementById("message2");
           heading.style.color="white"
           heading1.style.color="white"
+          heading2.style.color="white"
           var yearly_reduction = Math.round(reduction * 52);
-          var methane_emmision = Math.round(yearly_reduction * .082);
-          var co2_emmision = Math.round(yearly_reduction * 1.9);
-          heading.firstChild.nodeValue=  "Great! That would reduce every year about";
-          heading1.firstChild.nodeValue=  yearly_reduction +" lbs of food waste & " +
-                                          methane_emmision + " lbs of Methane emission & " +
-                                          co2_emmision + " lbs of CO2 emission.";
+          var co2_emmision = Math.round(yearly_reduction * 2.5);
+          heading.firstChild.nodeValue= "Great! That would reduce every year about " ;
+          heading1.firstChild.nodeValue=  co2_emmision;
+          heading2.firstChild.nodeValue= " lbs of GHG CO2-e emissions";
         }
 </script>
     <div>
@@ -35,12 +35,11 @@
         </div>
     {% endfor %}
 {% endif %}
+  <h4>Take a pledge today to reduce GHG(Greenhouse gases) emission by 2.5 MTCO2-e</h4>
+  <br>
+
         <div class="row">
         <div class="col-md-6">
-        <div class="row">
-          <h3>Take a pledge today </h3>
-        </div>
-        <br>
         <div class="row">
         <div class="col-md-3 p-2 justify-content-end d-flex">
           <label class="control-label justify-content-end" for="{{ field.zip_code }}" >Zip Code: </label>
@@ -67,8 +66,7 @@
         </div>
         <div class="row">
           <hr>
-          <h5> Waste generated per week in your household </h5>
-          <BR>
+          <h6> Waste generated per week in your household </h6>
         </div>
         <div class="row">
         <div class="col-md-3 justify-content-end d-flex">
@@ -90,7 +88,7 @@
         </div>
         <p> 15-30% of total waste is <a href="/foodwaste/compost">Organic food waste</a> in US household</p>
         <div class="p-2 border border-secondary">
-        <h5> I pledge to reduce food waste ending up in landfills by reduction and/or recycle through <a href="/foodwaste/compost-demo">Composting</a> every week</h5>
+        <h7> I pledge to reduce food waste ending up in landfills by reduction and/or recycle through <a href="/foodwaste/compost-demo">Composting</a> every week</h7>
         <div class="row">
             <div class="col-md-3 justify-content-end d-flex">
             <label class="control-label justify-content-end font-weight-bold" for="{{form.pledged_reduction.id_for_label}}"><b>Pledged Reduction(lbs):</b></label>
@@ -112,26 +110,26 @@
         </div>
         <div class="col-md-5 p-1 border border-primary">
           <div class="row" >
-          <h4><b>1.3 billion</B> tons of food is wasted globally each year<h4>
+          <H5><b>1.3 billion</B> tons of food is wasted globally each year<H5>
           </div>
           <div class="row">
-            <h4> <b>One third</b> all food produced is wasted</h4>
-          </div>
-          <br>
-          <div class="row">
-            <h4> <b>4.4 gigatons</b> of greenhouse gas emission from foodwaste</h4>
+            <H5> <b>One third</b> all food produced is wasted. Check <a href="/foodwaste">Country level</a> waste details</H5>
           </div>
           <br>
           <div class="row">
-            <h4> Methane generated from food waste is <b>25 times</b> more harmful than Carbon-Dioxide</h4>
+            <H5> <b>4.4 GT</b> of CO2-e(GHG) emissions from foodwaste</H5>
           </div>
           <br>
           <div class="row">
-            <h4> Over <b>50%</b> of food waste occurs at home</h4>
+            <H5> Methane generated from food waste is <b>25 times</b> more harmful than Carbon-Dioxide</H5>
           </div>
           <br>
           <div class="row">
-            <h4> <b>690 million</b> still go hungry</h4>
+            <H5> Over <b>50%</b> of food waste occurs at home</H5>
+          </div>
+          <br>
+          <div class="row">
+            <H5> <b>690 million</b> still go hungry</H5>
           </div>
           <br>
           <button class ="btn btn-primary" onclick="window.location.href='/foodwaste/pledgeresults'">Check Pledge Results</button>
@@ -140,8 +138,11 @@
         </div>
         <br>
         <div id="message-border" class="d-note col-md-10">
-            <h5 class="" id="message"> </h5>
-            <h4 id="message1"> </h4>
+          <h5>
+            <span class="" id="message"> </span>
+            <b><span class="jumbotron" id="message1"> </span></b>
+            <span id="message2"> </span>
+            </h5>
         </div>
 
 <!--

@@ -68,6 +68,8 @@ class CountryChartView(TemplateView):
 		context['country_records_all'] = countries_list_all
 		labels = []
 		data = []
+		gdps = []
+		wastes = []
 		for country in countries_list:
 			labels.append(country.name)
 			data.append(country.total_waste)
@@ -77,9 +79,31 @@ class CountryChartView(TemplateView):
 		return context
 
 class CountryDetailView(DetailView):
-    context_object_name = 'country_details'
+#    context_object_name = 'country_details'
     model = CountryLevelWaste
     template_name = 'foodwaste/country_detail.html'
+
+    def get_context_data(self,**kwargs):
+        context  = super().get_context_data(**kwargs)
+        labels = []
+        data = []
+        labels.append("Organic Waste")
+        labels.append("Other Waste")
+        data.append(self.object.organic_waste_per_person)
+        data.append(self.object.waste_per_person - self.object.organic_waste_per_person)
+        context['country_details'] = self.object
+        context['labels'] = labels
+        context['data'] = humanize.intword(data)
+        labels2 = []
+        data2 = []
+        labels2.append("Country Waste")
+        labels2.append("Rest of World")
+        all_waste = CountryLevelWaste.objects.aggregate(Sum('total_waste'))
+        data2.append(self.object.total_waste)
+        data2.append(all_waste.get('total_waste__sum') - self.object.total_waste)
+        context['labels2'] = labels2
+        context['data2'] = humanize.intword(data2)
+        return context
 
 class PledgeResultsView(TemplateView):
 	 template_name = 'foodwaste/pledge-results.html'
@@ -95,6 +119,9 @@ def compost(request):
 
 def about(request):
 	return render(request,'foodwaste/about.html')
+
+def press_coverage(request):
+	return render(request,'foodwaste/press-coverage.html')
 
 def compostdemo(request):
 	return render(request,'foodwaste/compost-demo.html')
