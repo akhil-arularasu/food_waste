@@ -2,7 +2,7 @@
 
 {% block content %}
     <br>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
     <script>
         function actionOnSubmit()
         {
@@ -121,6 +121,7 @@
                 var ctx3 = document.getElementById('scatter-chart2').getContext('2d');
                 window.myScatter3 = new Chart(ctx3, config3);
               };
+
               </script>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Raw dataset obtainted from worldbank.org for this analysis</span>
             </div>
@@ -134,13 +135,13 @@
                   <canvas id="scatter-chart2"></canvas>
                   <br>
                   <br>
-                  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.js"></script>
                   <script>
                   var config2 = {
                       type: 'scatter',
                       data: {
                         datasets: [{
-                          label: 'GDP to Total Waste',
+                          label: 'GDP(in Trillions) to Total Waste(Million Tons/Year)',
                           data: [
                             {% for country in country_records_all %}
                               {x:{{ country.gdp}},y:{{ country.total_waste}}},
@@ -150,6 +151,24 @@
                         }],
                       },
                       options: {
+                        scales: {
+                                  yAxes: [{
+                                      ticks: {
+                                          // Abbreviate the millions
+                                          callback: function(value, index, values) {
+                                              return value / 1e6 + 'M';
+                                          }
+                                      }
+                                  }],
+                                  xAxes: [{
+                                      ticks: {
+                                          // Abbreviate the millions
+                                          callback: function(value, index, values) {
+                                              return value / 1e12 + 'T';
+                                          }
+                                      }
+                                  }],
+                                },
                         responsive: true
                       }
                     };
@@ -157,7 +176,7 @@
                         type: 'scatter',
                         data: {
                           datasets: [{
-                            label: 'Population to Total Waste',
+                            label: 'Population(in Millions) to Total Waste(in Million Tons/Year)',
                             data: [
                               {% for country in country_records_all %}
                                 {x:{{ country.population}},y:{{ country.total_waste}}},
@@ -167,23 +186,30 @@
                           }],
                         },
                         options: {
+                          scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            // Abbreviate the millions
+                                            callback: function(value, index, values) {
+                                                return value / 1e6 + 'M';
+                                            }
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            // Abbreviate the millions
+                                            callback: function(value, index, values) {
+                                                return value / 1e6 + 'M';
+                                            }
+                                        }
+                                    }],
+                                  },
                           responsive: true
                         }
                       };
                     </script>
               </div>
               </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 {% endblock %}
