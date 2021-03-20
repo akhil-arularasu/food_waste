@@ -29,4 +29,6 @@ urlpatterns = [
       path('about', views.about, name='about'),
       path('press-coverage', views.press_coverage, name='press-coverage'),
       path('foodwaste-report', views.foodwaste_report, name='foodwaste_report'),
+      path('Research_At_RVCC', views.Research_At_RVCC, name='Research_At_RVCC'),
+
 ]

@@ -135,6 +135,10 @@ def milltownschool(request):
 def foodwaste_report(request):
 	return render(request,'foodwaste/foodwaste-report.html')
 
+def Research_At_RVCC(request):
+	return render(request,'foodwaste/Research_At_RVCC.html')
+
+
 def pledge_info_view(request):
 	form = forms.PledgeForm()
 
