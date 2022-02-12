@@ -1,6 +1,6 @@
 from django import forms
 from django.core import validators
-from foodwaste.models import PledgeInfo
+from foodwaste.models import PledgeInfo, OrganicImage
 
 # class SurveyForm(forms.Form):
 #     zip_code = forms.CharField(label='Enter your Zip Code')
@@ -15,3 +15,9 @@ class PledgeForm(forms.ModelForm):
     class Meta():
         model = PledgeInfo
         fields = ('zip_code', 'state','country', 'total_waste_per_week', 'total_food_waste_per_week', 'pledged_reduction')
+
+class ClassifyForm(forms.ModelForm):
+    """Form for the image model"""
+    class Meta:
+        model = OrganicImage
+        fields = ('image',) 

@@ -48,6 +48,11 @@ class PledgeInfo(models.Model):
     )
     created_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def ghg_emission(self):
+        return round((self.pledged_reduction *
+        2.5/2000))
+
     def __str__(self):
         return 'pledge'
 
@@ -56,3 +61,32 @@ class PledgeInfo(models.Model):
     #     unique_together = [first_name"", "last_name"]
 
 # Create your models here.
+class Image(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.title
+
+# Create your models here.
+class OrganicImage(models.Model):
+    image = models.ImageField(upload_to='images/')
+
+# Create your models here.
+class SchoolWaste(models.Model):
+    school_name = models.CharField(max_length=200,db_index=True,)
+    school_type = models.CharField(max_length=200)
+    school_address = models.CharField(max_length=200)
+    city = models.CharField(max_length=128,blank=True, default='')
+    county = models.CharField(max_length=128,blank=True, default='',db_index=True,)
+    state = models.CharField(max_length=128,blank=True, default='',db_index=True,)
+    country = models.CharField(max_length=128,blank=True, default='')
+    zip_code = models.IntegerField(null=True,db_index=True,)
+    school_website = models.CharField(max_length=200)
+    excess_food_low = models.IntegerField(default=0)
+    excess_food_high = models.IntegerField(default=0.0)
+    def __str__(self):
+        return self.school_name
+
+#    def get_absolute_url(self):
+#        return reverse("foodwaste:school_detail",kwargs={'pk':self.pk})

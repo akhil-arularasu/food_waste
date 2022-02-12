@@ -1,5 +1,6 @@
+
 from django.shortcuts import render
-from foodwaste.models import CountryLevelWaste, PledgeInfo
+from foodwaste.models import CountryLevelWaste, PledgeInfo, OrganicImage
 from . import forms
 import humanize
 from django.views.generic import (View,TemplateView,
@@ -8,6 +9,15 @@ from django.views.generic import (View,TemplateView,
                                 UpdateView)
 from django.db.models import Sum
 from django.forms.utils import ErrorList
+from keras.models import load_model
+from skimage.io import imread, imshow
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Activation, Dropout, Flatten, Dense, BatchNormalization
+from keras.preprocessing.image import ImageDataGenerator, img_to_array, load_img
+from keras.utils.vis_utils import plot_model
+from glob import glob
+import numpy as np
+
 
 # # Create your views here.
 # def index(request):
@@ -105,6 +115,25 @@ class CountryDetailView(DetailView):
         context['data2'] = humanize.intword(data2)
         return context
 
+class ClassifyWasteView(TemplateView):
+    template_name = 'foodwaste/classify_organic_waste.html'
+
+    def get_context_data(self,**kwargs):
+        model = load_model('model.h5')
+        img = load_img('C:/Users/Arul/Documents/Akhil/DATASET/TEST/R/R_10651.JPG', target_size=(224,224))
+        img = img_to_array(img)
+        img = img / 255
+        img = np.expand_dims(img,axis=0)
+        pred = model.predict(img)
+        pred[0][0]
+        if pred[0][0] > 0.9:
+
+            print("The image belongs to Organic waste category")
+        else:
+            print("The image belongs to Recycle waste category ")
+        context  = super().get_context_data(**kwargs)
+        return context
+
 class PledgeResultsView(TemplateView):
 	 template_name = 'foodwaste/pledge-results.html'
 
@@ -158,3 +187,43 @@ def pledge_info_view(request):
 			errors = form._errors.setdefault("pledged_reduction", ErrorList())
 			errors.append(u'Please check and re-submit')
 	return render(request,'foodwaste/pledge_info.html',{'form':form})
+
+def classify_waste_view(request):
+    context = {}
+    form = forms.ClassifyForm()
+    if request.method == 'POST':
+        form = forms.ClassifyForm(request.POST,request.FILES)
+        if form.is_valid():
+            print('validation success')
+            img = form.cleaned_data.get("image")
+            img_obj = OrganicImage.objects.create(image=img)
+            img_obj.save()
+            print(img_obj)
+            print(img_obj.image.name)
+            model = load_model('model.h5')
+            name = img_obj.image.path
+            print(name);
+            img2 = load_img(img_obj.image.path , target_size=(224,224))
+            print('loaded');
+            img2 = img_to_array(img2)
+            print('converted');
+            img2 = img2 / 255
+            img2 = np.expand_dims(img2,axis=0)
+            pred = model.predict(img2)
+            print(pred)
+            message = "This is not Organic Waste"
+            if pred[0][0] > 0.8:
+                message = "This is Organic Waste"
+            elif pred[0][1] > 0.8:
+                message = "This is Recycle Waste"
+            else:
+                message = "The model couldn't classify this image with certainity"
+
+            context['form']= form
+            context['img_obj']= img_obj
+            context['message']= message
+            return render(request,'foodwaste/classify_waste.html',context)
+        else:
+            print('ERROR invalid entry. Please review and resubmit')
+    context['form']= form
+    return render(request,'foodwaste/classify_waste.html',context)
