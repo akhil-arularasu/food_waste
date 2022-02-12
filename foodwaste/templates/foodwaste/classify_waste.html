@@ -1,0 +1,60 @@
+{% extends "personal/header.html" %}
+
+{% block content %}
+    <div>
+      <br>
+      <h4>Deep Learning Model to Classify Oraganic and Recyclable Wastes</h4>
+      <br>
+      </div>
+      <br>
+      <br>
+      <div>
+
+            <div class="row content">
+              <div class="col-sm-5">
+                <h5>Upload an image to classify</h5>
+                <br>
+                <form method="post" enctype="multipart/form-data">
+                  {% for field in form %}
+                  <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field.label_tag }} {{ field }}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                  {% csrf_token %}
+                  <br/>
+                  <br/>
+                  <button type="submit">Upload</button>
+                </form>
+                <br>
+                {% if img_obj %}
+                <p class="text-danger">{{message}}</p>
+                <br>
+                <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+                {% endif %}
+              </form>
+              <br>
+              </div>
+              <div class="col-sm-5">
+                <h4>
+                This model is based on  Covolutional Neural Network(CNN) </h4>
+                <h4>Utilizing TensorFlow and Keras APIs
+                <img src="/media/images/TensorFlow.png" width="100px" style='max-height:1500px;' alt="face">
+                <img src="/media/images/Keras.png" width="100px" style='max-height:1500px;' alt="face">
+                </h4>
+                <video width="520" height="440" controls loop>
+                  <source src="/media/images/screen.webm" type="video/webm">
+                  <source src="movie.ogg" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              </div>
+              </div>
+              * Images obtained from the <a href='https://www.kaggle.com/techsash/waste-classification-data'>Kaagle Waste Classification dataset</a> is used to Traing and Test the Model
+
+
+
+{% endblock %}
